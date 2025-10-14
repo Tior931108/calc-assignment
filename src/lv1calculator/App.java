@@ -11,7 +11,7 @@ b. 계산기는 exit을 입력할 때까지 계속해서 값을 받고 연산 �
 
  */
 
-public class Calculator {
+public class App {
     public static void main(String[] args) {
         System.out.println("Hello, Calculator!");
         System.out.println("=================Lv1 클래스 없이 구현하는 게산기 과제=================");
