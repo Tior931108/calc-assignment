@@ -13,6 +13,7 @@ b. 계산기는 exit을 입력할 때까지 계속해서 값을 받고 연산 �
  1) 양의 정수(0 포함) 입력받기
  2) 사칙연산(+ , - , * , /) 입력받기
  3) 위에서 입력 받은 양의 정수 2개와 사칙연산 기호를 사용하여 연산을 진행한 후 결과값을 출력하기
+ 4) 반복문을 사용하되, 반복의 종료를 알려주는 "exit" 문자열을 입력하기 전까지 무한으로 계산을 진행할 수 있도록 수정하기
 
  */
 public class App {
@@ -76,8 +77,16 @@ public class App {
             }
 
             System.out.println("결과: " + result);
-            System.out.println("==== 사칙연산 계산기 종료 ====");
-            break;
+
+            // 반복 여부 확인 (exit 입력해야만 계산기 종료)
+            System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
+            String exit = sc.next(); // 종료할 문자열 입력
+
+            if(exit.equals("exit")) {
+                System.out.println("==== 사칙연산 계산기 종료 ====");
+                break;
+            }
         }
+        sc.close(); // 입력 닫기
     }
 }
