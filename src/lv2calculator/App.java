@@ -1,0 +1,88 @@
+package lv2calculator;
+
+import java.util.Scanner;
+
+/**
+
+Lv.2 클래스를 적용해 기본적인 연산을 수행할 수 있는 계산기 만들기
+
+ [요약]
+ a. 계산된 결과 값들을 기록하는 컬렉션을 만든다.
+ b. 컬렉션의 가장 먼저 저장된 데이터를 삭제하는 기능을 만든다.
+
+ 1) 사칙연산을 수행 후, 결과값 반환 메서드 구현 & 연산 결과를 저장하는 컬렉션 타입 필드를 가진 Calculator 생성
+ */
+public class App {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        while(true) { // 전체 계산 반복
+            System.out.println("====== 사칙연산 계산기 ======");
+
+            // 입력 받은 수 저장할 변수 선언
+            int num1, num2;
+            // 연산자 저장할 변수 선언
+            char operator;
+            // 연산 결과 저장할 변수 선언
+            int result;
+
+            // 첫 번째 숫자 입력
+            while (true) {
+                System.out.print("첫 번째 숫자를 입력하세요 (0 이상): ");
+                num1 = sc.nextInt();
+                // 양의 정수일때만 반복문 탈출
+                if (num1 >= 0) {
+                    break;
+                }
+                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+            }
+
+            // 두 번째 숫자 입력
+            for (;;) {
+                System.out.print("두 번째 숫자를 입력하세요 (0 이상): ");
+                num2 = sc.nextInt();
+                if (num2 >= 0) {
+                    break;
+                }
+                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+            }
+
+            System.out.print("사칙연산 기호를 입력하세요 : ");
+            operator = sc.next().charAt(0);
+
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 == 0) {
+                        System.out.println("나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.");
+                        continue; // while문 건너뛰어서 다시 숫자 및 연산자 입력
+                    }
+                    result = num1 / num2;
+                    break;
+                default:
+                    System.out.println("잘못된 연산 기호 입니다. (+, -, *, / 중 입력하세요)");
+                    continue; // 잘못된 연산자 입력시에도 재입력
+            }
+
+            System.out.println("결과: " + result);
+
+            // 반복 여부 확인 (exit 입력해야만 계산기 종료)
+            System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
+            String exit = sc.next(); // 종료할 문자열 입력
+
+            if(exit.equals("exit")) {
+                System.out.println("==== 사칙연산 계산기 종료 ====");
+                break;
+            }
+        }
+        sc.close(); // 입력 닫기
+    }
+}
