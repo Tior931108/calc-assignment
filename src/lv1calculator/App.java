@@ -12,13 +12,17 @@ b. 계산기는 exit을 입력할 때까지 계속해서 값을 받고 연산 �
 
 1) master -> main 브랜치 변경 및 클래스명 App으로 수정
 2) 양의 정수(0 포함) 입력받기
+ 3) 사칙연산(+ , - , * , /) 입력받기
 
  */
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        // 입력 받을 수 저장할 변수 선언
         int num1, num2;
+        // 연산자 저장할 변수 선언
+        char oprator;
 
         // 첫 번째 숫자 입력
         while(true){
@@ -43,6 +47,11 @@ public class App {
 
         System.out.println("입력된 첫 번쨰 숫자 : " + num1);
         System.out.println("입력된 두 번째 숫자 : " + num2);
+
+        System.out.print("사칙연산 기호를 입력하세요 : ");
+        oprator = sc.next().charAt(0);
+
+        System.out.println("입력 받은 사칙 연산자 : " + oprator);
 
         sc.close(); // 입력 자원 해제
     }
