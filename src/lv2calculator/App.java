@@ -14,6 +14,8 @@ Lv.2 클래스를 적용해 기본적인 연산을 수행할 수 있는 계산�
  */
 public class App {
     public static void main(String[] args) {
+        // Calculator 객체 생성
+        Calculator calculator = new Calculator();
         Scanner sc = new Scanner(System.in);
 
         while(true) { // 전체 계산 반복
@@ -50,29 +52,20 @@ public class App {
             System.out.print("사칙연산 기호를 입력하세요 : ");
             operator = sc.next().charAt(0);
 
-            switch (operator) {
-                case '+':
-                    result = num1 + num2;
-                    break;
-                case '-':
-                    result = num1 - num2;
-                    break;
-                case '*':
-                    result = num1 * num2;
-                    break;
-                case '/':
-                    if (num2 == 0) {
-                        System.out.println("나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.");
-                        continue; // while문 건너뛰어서 다시 숫자 및 연산자 입력
-                    }
-                    result = num1 / num2;
-                    break;
-                default:
-                    System.out.println("잘못된 연산 기호 입니다. (+, -, *, / 중 입력하세요)");
-                    continue; // 잘못된 연산자 입력시에도 재입력
+            /**
+             * Calculator 객체를 이용해서 연산수행
+             *  - 잘못된 나눗셈 및 잘못된 연산자 오류 발생할 수 있어서 try-catch 구문 사용
+             */
+            try {
+                // 연산 정상 실행
+                result = calculator.calculate(num1, num2, operator);
+                System.out.println("결과: " + result);
+            } catch (Exception e) {
+                // 잘못된 나눗셈 및 잘못된 연산자 사용시 오류 문구 출력
+                System.out.println(e.getMessage());
+                // 무한 루프를 위해 continue; 적용
+                continue;
             }
-
-            System.out.println("결과: " + result);
 
             // 반복 여부 확인 (exit 입력해야만 계산기 종료)
             System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
