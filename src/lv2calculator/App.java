@@ -11,6 +11,7 @@ Lv.2 클래스를 적용해 기본적인 연산을 수행할 수 있는 계산�
  b. 컬렉션의 가장 먼저 저장된 데이터를 삭제하는 기능을 만든다.
 
  1) 사칙연산을 수행 후, 결과값 반환 메서드 구현 & 연산 결과를 저장하는 컬렉션 타입 필드를 가진 Calculator 생성
+ 2) Lv.1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정
  */
 public class App {
     public static void main(String[] args) {
