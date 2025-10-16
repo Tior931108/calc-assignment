@@ -57,10 +57,9 @@ public class App {
             System.out.print("사칙연산 기호를 입력하세요 : ");
             operator = sc.next().charAt(0);
 
-            /**
-             * Calculator 객체를 이용해서 연산수행
-             *  - 잘못된 나눗셈 및 잘못된 연산자 오류 발생할 수 있어서 try-catch 구문 사용
-             */
+
+            // Calculator 객체를 이용해서 연산수행
+            // 잘못된 나눗셈 및 잘못된 연산자 오류 발생할 수 있어서 try-catch 구문 사용
             try {
                 // 연산 정상 실행
                 result = calculator.calculate(num1, num2, operator);
@@ -76,8 +75,58 @@ public class App {
             System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
             String exit = sc.next(); // 종료할 문자열 입력
 
+
+
+            // Calculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
             if(exit.equals("exit")) {
-                System.out.println("==== 사칙연산 계산기 종료 ====");
+                System.out.println("====== 사칙연산 종료 =======");
+
+                boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
+
+                // 삭제 반복문(무한 루프)
+                while (true) {
+
+                    // 삭제시에 최초 안내 사항
+                    if(!notice) {
+                        System.out.println("현재 저장된 연산결과 : " + calculator.getResults());
+                        System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
+
+                        // 결과값 삭제 여무
+                        System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
+                        String removeValue = sc.next();
+                        if (removeValue.equals("no")) {
+                            break;
+                        }
+
+                        notice = true; // 이후에는 재반복 안되도록 설정
+                    }
+
+                    // 저장된 연산결과가 없을 경우
+                    if(calculator.getResults().isEmpty()) {
+                        System.out.println("저장된 연산결과가 없습니다.");
+                        break;
+                    }
+
+                    // getter로 리스트를 가져오기
+//                    List<Integer> calculatorResults = calculator.getResults();
+                    // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
+                    calculator.removeResult();
+                    // setter를 활용하여 변경된 결과값 삽입
+//                    calculator.setResults(calculatorResults);
+
+                    // 계속 삭제할지 물어보기
+                    System.out.println("삭제 후 저장된 연산결과 : " + calculator.getResults());
+                    System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
+                    String continueRemove = sc.next();
+
+                    if (continueRemove.equals("no")) {
+                        break;
+                    }
+                }
+
+                // 최종 저장된 결과 리스트 및 계산기 종료
+                System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
+                System.out.println("====== 사칙연산 게산기 종료 =====");
                 break;
             }
         }
