@@ -1,4 +1,4 @@
-# �Calculator Project
+# �Calculator Assignment
 
 Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 
