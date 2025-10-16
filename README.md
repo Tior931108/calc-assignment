@@ -48,7 +48,7 @@ public void setResults(List<Integer> results) { ... }
 
 ### 3. 데이터 삭제 기능
 ```java
-public void removeFirstResult() { ... }
+public void removeResult() { ... }
 ```
 - FIFO(First In First Out) 방식으로 가장 먼저 저장된 데이터 삭제
 - 사용자가 계속 삭제할지 선택 가능
