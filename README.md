@@ -27,8 +27,11 @@ Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 
 ```
 src/
-├── App.java           # 메인 실행 클래스
-└── Calculator.java    # 계산기 로직 클래스
+├──lv1calculator          # lv.1 계산기 패키지
+   └── App.java           # 메인 실행 클래스
+├──lv2calculator          # lv.2 계산기 패키지
+   └── App.java           # 메인 실행 클래스
+   └── Calculator.java    # 계산기 로직 클래스
 ```
 
 ## 💡 핵심 구현 사항
@@ -64,11 +67,7 @@ public void removeResult() { ... }
 git clone [repository-url]
 ```
 
-2. 컴파일 및 실행
-```bash
-javac App.java Calculator.java
-java App
-```
+2. 각 패키지 내에서 컴파일 및 실행
 
 ## 📝 사용 예시
 
@@ -110,7 +109,7 @@ java App
 삭제 후 저장된 연산결과 : []
 계속 삭제하시겠습니까? (no 입력시 종료) : no
 최종 저장된 연산결과 : []
-====== 사칙연산 게산기 종료 =====
+====== 사칙연산 계산기 종료 =====
 
 ```
 
