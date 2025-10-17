@@ -50,7 +50,7 @@ public class Calculator {
 
     // 간접 접근을 통해 필드에 접근하여 가져오는 메소드 - getter
     public List<Integer> getResults() {
-        return results;
+        return this.results;
     }
 
 
