@@ -2,6 +2,7 @@ package lv3calculator;
 
 import lv2calculator.Calculator;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -85,10 +86,12 @@ public class App {
 
                 // 삭제 반복문(무한 루프)
                 while (true) {
+                    // getter로 리스트를 가져오기
+                    List<Integer> calculatorResults = calculator.getResults();
 
                     // 삭제시에 최초 안내 사항
                     if(!notice) {
-                        System.out.println("현재 저장된 연산결과 : " + calculator.getResults());
+                        System.out.println("현재 저장된 연산결과 : " + calculatorResults);
                         System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
 
                         // 결과값 삭제 여무
@@ -102,20 +105,19 @@ public class App {
                     }
 
                     // 저장된 연산결과가 없을 경우
-                    if(calculator.getResults().isEmpty()) {
+                    if(calculatorResults.isEmpty()) {
                         System.out.println("저장된 연산결과가 없습니다.");
                         break;
                     }
 
-                    // getter로 리스트를 가져오기
-//                    List<Integer> calculatorResults = calculator.getResults();
+
                     // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
                     calculator.removeResult();
                     // setter를 활용하여 변경된 결과값 삽입
-//                    calculator.setResults(calculatorResults);
+                    calculator.setResults(calculatorResults);
 
                     // 계속 삭제할지 물어보기
-                    System.out.println("삭제 후 저장된 연산결과 : " + calculator.getResults());
+                    System.out.println("삭제 후 저장된 연산결과 : " + calculatorResults);
                     System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
                     String continueRemove = sc.next();
 
