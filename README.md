@@ -23,20 +23,30 @@ Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 - **Getter/Setter**: 간접 접근을 통한 데이터 관리
 - **삭제 기능**: 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
 
+### Lv.3 - Enum을 이해한 계산기 추가 개선
+- `OperatorType` Enum 클래스로 사칙연산 기능 분리
+- `ArithmeticCalculator` 클래스는 사칙연산의 결과값들을 저장하고 삭제하는 기능만을 담당
+- 
+
 ## 🏗️ 프로젝트 구조
 
 ```
 src/
-├──lv1calculator          # lv.1 계산기 패키지
-   └── App.java           # 메인 실행 클래스
-├──lv2calculator          # lv.2 계산기 패키지
-   └── App.java           # 메인 실행 클래스
-   └── Calculator.java    # 계산기 로직 클래스
+├──lv1calculator                   # lv.1 계산기 패키지
+   └── App.java                    # 메인 실행 클래스
+├──lv2calculator                   # lv.2 계산기 패키지
+   └── App.java                    # 메인 실행 클래스
+   └── Calculator.java             # 계산기 로직 클래스
+├──lv3calculator                   # lv.3 계산기 패키지
+   └── App.java                    # 메인 실행 클래스
+   └── ArithmeticCalculator.java   # 사칙연산 결과값 리스트 저장하는 클래스
+   └── OperatorType.java           # 사칙연산 기능 클래스
 ```
 
 ## 💡 핵심 구현 사항
 
-### 1. 캡슐화 (Encapsulation)
+### [Lv.2] 
+### 1. 캡슐화 (Encapsulation) 
 ```java
 private List<Integer> results = new ArrayList<>();
 ```
@@ -59,6 +69,13 @@ public void removeResult() { ... }
 ### 4. 예외 처리
 - **0으로 나누기**: `ArithmeticException` 처리
 - **잘못된 연산자**: `IllegalArgumentException` 처리
+
+### [Lv.3]
+### 5. 단일 클래스는 하나의 책임(기능)만 지님.
+- 추후 추가될 연산자의 경우 `OperatorType` Enum 클래스 에서만 기능 추가하면 됌.
+- `ArithmeticCalculator`클래스는 사칙연산 결과값 컬렉션 기능으로 분리
+- 객체지향 분리로 유지보수 향상
+
 
 ## 🚀 실행 방법
 
