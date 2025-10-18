@@ -82,7 +82,7 @@ public class App {
             System.out.print("더 계산하시겠습니까? (exit 입력 시 종료) : ");
             String exit = sc.next(); // 종료할 문자열 입력
 
-            if(exit.equals("exit")) {
+            if(exit.equalsIgnoreCase("exit")) {
                 System.out.println("==== 사칙연산 계산기 종료 ====");
                 break;
             }

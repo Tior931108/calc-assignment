@@ -79,7 +79,7 @@ public class App {
 
 
             // Calculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
-            if(exit.equals("exit")) {
+            if(exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
                 boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
@@ -98,7 +98,7 @@ public class App {
                         // 결과값 삭제 여무
                         System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
                         String removeValue = sc.next();
-                        if (removeValue.equals("no")) {
+                        if (removeValue.equalsIgnoreCase("no")) {
                             break;
                         }
 
@@ -121,14 +121,14 @@ public class App {
                     System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
                     String continueRemove = sc.next();
 
-                    if (continueRemove.equals("no")) {
+                    if (continueRemove.equalsIgnoreCase("no")) {
                         break;
                     }
                 }
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
                 System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
-                System.out.println("====== 사칙연산 게산기 종료 =====");
+                System.out.println("====== 사칙연산 계산기 종료 =====");
                 break;
             }
         }

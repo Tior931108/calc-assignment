@@ -19,8 +19,7 @@ Lv.3 Enum, 제네릭, 람다&스트림을 이해한 계산기 만들기
  */
 public class App {
     public static void main(String[] args) {
-        // ArithmeticCalculator 객체로 변경
-        // 코드 유지를 위해 변수 이름은 동일하게 유지
+        // ArithmeticCalculator 객체로 변경,  코드 유지를 위해 변수 이름은 동일하게 유지
         ArithmeticCalculator calculator = new ArithmeticCalculator();
         Scanner sc = new Scanner(System.in);
 
@@ -59,7 +58,7 @@ public class App {
             operator = sc.next().charAt(0);
 
 
-            // Calculator 객체를 이용해서 연산수행
+            // ArithmeticCalculator 객체를 이용해서 연산수행
             // 잘못된 나눗셈 및 잘못된 연산자 오류 발생할 수 있어서 try-catch 구문 사용
             try {
                 // 연산 정상 실행
@@ -78,8 +77,8 @@ public class App {
 
 
 
-            // Calculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
-            if(exit.equals("exit")) {
+            // ArithmeticCalculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
+            if(exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
                 boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
@@ -97,7 +96,7 @@ public class App {
                         // 결과값 삭제 여무
                         System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
                         String removeValue = sc.next();
-                        if (removeValue.equals("no")) {
+                        if (removeValue.equalsIgnoreCase("no")) {
                             break;
                         }
 
@@ -121,14 +120,14 @@ public class App {
                     System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
                     String continueRemove = sc.next();
 
-                    if (continueRemove.equals("no")) {
+                    if (continueRemove.equalsIgnoreCase("no")) {
                         break;
                     }
                 }
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
                 System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
-                System.out.println("====== 사칙연산 게산기 종료 =====");
+                System.out.println("====== 사칙연산 계산기 종료 =====");
                 break;
             }
         }
