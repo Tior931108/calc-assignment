@@ -26,7 +26,7 @@ Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 ### Lv.3 - Enum을 이해한 계산기 추가 개선
 - `OperatorType` Enum 클래스로 사칙연산 기능 분리
 - `ArithmeticCalculator` 클래스는 사칙연산의 결과값들을 저장하고 삭제하는 기능만을 담당
-- 
+
 
 ## 🏗️ 프로젝트 구조
 
@@ -71,8 +71,20 @@ public void removeResult() { ... }
 - **잘못된 연산자**: `IllegalArgumentException` 처리
 
 ### [Lv.3]
-### 5. 단일 클래스는 하나의 책임(기능)만 지님.
-- 추후 추가될 연산자의 경우 `OperatorType` Enum 클래스 에서만 기능 추가하면 됌.
+### 5. 각 Enum 상수는 추상 메소드를 상속 받아서 구현.
+```java
+PLUS(operator) {
+    @Override
+    public int apply(int num1, int num2) {
+        return num1 + num2;
+    }
+}
+```
+```java
+public abstract int apply(int num1, int num2);
+```
+
+- 추후 추가될 연산자의 경우 `OperatorType` Enum 에서 기능 추가.
 - `ArithmeticCalculator`클래스는 사칙연산 결과값 컬렉션 기능으로 분리
 - 객체지향 분리로 유지보수 향상
 
@@ -149,6 +161,7 @@ git clone [repository-url]
 - **v1.0**: 기본 사칙연산 계산기 구현
 - **v2.0**: Calculator 클래스 분리 및 캡슐화 적용
 - **v2.1**: Getter/Setter를 활용한 데이터 삭제 기능 추가
+- **v3.0**: Enum 타입을 활용하여 연산자 타입 정보관리 분리 
 
 ## 👤 작성자
 
