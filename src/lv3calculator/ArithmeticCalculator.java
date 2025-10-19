@@ -3,9 +3,14 @@ package lv3calculator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArithmeticCalculator {
+/**
+ * 제네릭을 활용한 사칙연산 클래스
+ * - 정수와 실수를 혼합하여 계산 가능 (ex) 10 + 3.5)
+ * - 제네릭을 통해 타입 안정성 확보
+ */
+public class ArithmeticCalculator<T extends Number> {
     // 연산 결과를 저장하는 컬렉션 타입 필드 - private 사용하여 캡슐화
-    private List<Integer> results = new ArrayList<>();
+    private List<T> results = new ArrayList<>();
 
     /**
      * [ calculate 메소드 동작과정 ]
@@ -15,21 +20,21 @@ public class ArithmeticCalculator {
      * ㄴ 0으로 나누기 등의 문제 발생 시 예외 처리
      * 3. 연산 성공 결과를 results 리스트에 저장
      *
-     * @param num1 첫번째 숫자
-     * @param num2 두번째 숫자
+     * @param num1     첫번째 숫자
+     * @param num2     두번째 숫자
      * @param operator 연산자
      * @return 계산된 값
      * @throws IllegalArgumentException 잘못된 연산자일경우
-     * @throws ArithmeticException 0으로 나누기 시도할경우
+     * @throws ArithmeticException      0으로 나누기 시도할경우
      */
-    public int calculate(int num1, int num2, char operator) {
+    public T calculate(Number num1, Number num2, char operator) {
         // 1. 입력 받은 char 형태의 연산자를 OperatorType 형태로 변환
         // isOperator()에서 잘못된 연산자로 판단하면 예외 발생
         OperatorType operatorType = OperatorType.isOperator(operator);
 
         // 2. 실제 연산을 수행
         // apply()에서 0으로 나누기 등의 문제 발생시 예외 발생
-        int result = operatorType.apply(num1, num2);
+        T result = operatorType.apply(num1, num2);
 
         // 3. 연산 결과를 리스트에 저장
         results.add(result);
@@ -38,13 +43,13 @@ public class ArithmeticCalculator {
     }
 
     // 간접 접근을 통해 필드에 접근하여 가져오는 메소드 - getter
-    public List<Integer> getResults() {
+    public List<T> getResults() {
         return results;
     }
 
 
     // 간접 접근을 통해 필드에 접근하여 수정하는 메소드 - setter
-    public void setResults(List<Integer> results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 

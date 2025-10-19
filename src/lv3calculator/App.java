@@ -6,16 +6,15 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
-
-Lv.3 Enum, 제네릭, 람다&스트림을 이해한 계산기 만들기
-
- [요약]
- a. 양의 정수만 받을 수 있었지만, 이제부터는 실수도 받을 수 있게 수정한다.
- b. 결과가 저장되어 있는 컬렉션을 조회하는 기능을 만든다.
- c. 그때 특정 값보다 큰 결과값을 출력할 수 있도록 한다.
-
- 1) Enum 타입을 활용하여 연산자 타입에 대한 정보를 관리하고 이를 사칙연산 계산기 ArithmeticCalculator 클래스 활용
-
+ * Lv.3 Enum, 제네릭, 람다&스트림을 이해한 계산기 만들기
+ *
+ * [요약]
+ * a. 양의 정수만 받을 수 있었지만, 이제부터는 실수도 받을 수 있게 수정한다.
+ * b. 결과가 저장되어 있는 컬렉션을 조회하는 기능을 만든다.
+ * c. 그때 특정 값보다 큰 결과값을 출력할 수 있도록 한다.
+ *
+ * 1) Enum 타입을 활용하여 연산자 타입에 대한 정보를 관리하고 이를 사칙연산 계산기 ArithmeticCalculator 클래스 활용
+ * 2) 실수, 즉 double 타입의 값을 전달 받아도 연산이 수행하도록 만들기
  */
 public class App {
     public static void main(String[] args) {
@@ -23,15 +22,15 @@ public class App {
         ArithmeticCalculator calculator = new ArithmeticCalculator();
         Scanner sc = new Scanner(System.in);
 
-        while(true) { // 전체 계산 반복
+        while (true) { // 전체 계산 반복
             System.out.println("====== 사칙연산 계산기 ======");
 
             // 입력 받은 수 저장할 변수 선언
-            int num1, num2;
+            Number num1, num2;
             // 연산자 저장할 변수 선언
             char operator;
             // 연산 결과 저장할 변수 선언
-            int result;
+            Number result;
 
             // 첫 번째 숫자 입력
             num1 = getIsNumber(sc, "첫 번째");
@@ -48,7 +47,12 @@ public class App {
             try {
                 // 연산 정상 실행
                 result = calculator.calculate(num1, num2, operator);
-                System.out.println("결과: " + result);
+                // 결과 타입에 맞게 출력
+                if (result instanceof Integer) {
+                    System.out.println("결과(정수) : " + result);
+                } else if (result instanceof Double) {
+                    System.out.println("결과(실수) : " + result);
+                }
             } catch (Exception e) {
                 // 잘못된 나눗셈 및 잘못된 연산자 사용시 오류 문구 출력
                 System.out.println(e.getMessage());
@@ -61,9 +65,8 @@ public class App {
             String exit = sc.next(); // 종료할 문자열 입력
 
 
-
             // ArithmeticCalculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
-            if(exit.equalsIgnoreCase("exit")) {
+            if (exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
                 // 결과값 삭제 여부 메소드
@@ -80,21 +83,22 @@ public class App {
 
     /**
      * 양의 정수 입력 받는 메소드
-     * @param sc Scanner 객체
+     *
+     * @param sc    Scanner 객체
      * @param order 순서 ("첫 번째", "두 번째")
      * @return 입력 받은 양의 숫자
      */
-    private static int getIsNumber(Scanner sc, String order) {
+    private static Number getIsNumber(Scanner sc, String order) {
         while (true) {
-            System.out.print(order + " 숫자를 입력하세요 (정수) : ");
-            // 입력한 값이 숫자 정수라면
+            System.out.print(order + " 숫자를 입력하세요 (정수 or 실수) : ");
+            // 입력한 숫자값이 정수라면
             if (sc.hasNextInt()) {
-                int num = sc.nextInt();
-                // 양의 정수만 반환
-                if(num >= 0) {
-                    return num;
-                }
-                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+                int numInt = sc.nextInt();
+                return numInt; // Integer 반환
+            // 입력한 숫자값이 실수라면
+            } else if (sc.hasNextDouble()) {
+                double numDouble = sc.nextDouble();
+                return numDouble; // Double 반환
             } else {
                 System.out.println("올바른 숫자만 입력해주세요.");
                 sc.next(); // 잘못된 입력 제거
@@ -104,7 +108,8 @@ public class App {
 
     /**
      * 사칙연산 결과문 삭제 처리 여부 메소드
-     * @param sc Scanner 객체
+     *
+     * @param sc         Scanner 객체
      * @param calculator ArithmeticCalculator 객체
      */
     private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator) {
@@ -116,7 +121,7 @@ public class App {
             List<Integer> calculatorResults = calculator.getResults();
 
             // 삭제시에 최초 안내 사항
-            if(!notice) {
+            if (!notice) {
                 System.out.println("현재 저장된 연산결과 : " + calculatorResults);
                 System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
 
@@ -131,7 +136,7 @@ public class App {
             }
 
             // 저장된 연산결과가 없을 경우
-            if(calculatorResults.isEmpty()) {
+            if (calculatorResults.isEmpty()) {
                 System.out.println("저장된 연산결과가 없습니다.");
                 break;
             }

@@ -23,9 +23,10 @@ Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 - **Getter/Setter**: 간접 접근을 통한 데이터 관리
 - **삭제 기능**: 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
 
-### Lv.3 - Enum을 이해한 계산기 추가 개선
+### Lv.3 - Enum과 제네릭 이해한 계산기 추가 개선
 - `OperatorType` Enum 클래스로 사칙연산 기능 분리
 - `ArithmeticCalculator` 클래스는 사칙연산의 결과값들을 저장하고 삭제하는 기능만을 담당
+- 제네릭을 활용하여 정수와 실수 자유롭게 입력 가능
 
 
 ## 🏗️ 프로젝트 구조
@@ -71,7 +72,7 @@ public void removeResult() { ... }
 - **잘못된 연산자**: `IllegalArgumentException` 처리
 
 ### [Lv.3]
-### 5. 각 Enum 상수는 추상 메소드를 상속 받아서 구현.
+### 5. 각 Enum 상수는 추상 메소드 apply를 상속.
 ```java
 PLUS(operator) {
     @Override
@@ -79,14 +80,23 @@ PLUS(operator) {
         return num1 + num2;
     }
 }
-```
-```java
+
+...
+
 public abstract int apply(int num1, int num2);
 ```
 
 - 추후 추가될 연산자의 경우 `OperatorType` Enum 에서 기능 추가.
 - `ArithmeticCalculator`클래스는 사칙연산 결과값 컬렉션 기능으로 분리
-- 객체지향 분리로 유지보수 향상
+- [숫자][연산자][숫자]의 이항 연산의 공통 기능을 강제하는 추상 메소드 사용
+
+### 6. 제네릭을 활용하여 정수와 실수 자유롭게 입력
+```java
+public class ArithmeticCalculator<T extends Number> { ... }
+
+public abstract <T extends Number> T apply(Number num1, Number num2);
+```
+- `Integer`, `Double` Wrapper 클래스의 부모 클래스인 `Number`클래스를 상속 받아 제네릭`<T>` 구현
 
 
 ## 🚀 실행 방법
@@ -155,13 +165,16 @@ git clone [repository-url]
 - Java 컬렉션 프레임워크(ArrayList) 활용
 - 예외 처리(Exception Handling)
 - Scanner를 통한 사용자 입력 처리
+- Enum 타입 활용하여 연산자 정보 관리
+- Number 클래스 상속받아 제네릭 구현
 
 ## 🔄 버전 히스토리
 
 - **v1.0**: 기본 사칙연산 계산기 구현
 - **v2.0**: Calculator 클래스 분리 및 캡슐화 적용
 - **v2.1**: Getter/Setter를 활용한 데이터 삭제 기능 추가
-- **v3.0**: Enum 타입을 활용하여 연산자 타입 정보관리 분리 
+- **v3.0**: Enum 타입을 활용하여 연산자 타입 정보관리 분리
+- **v3.1**: 제네릭을 활용하여 정수와 실수 자유롭게 입력
 
 ## 👤 작성자
 
