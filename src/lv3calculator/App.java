@@ -34,25 +34,10 @@ public class App {
             int result;
 
             // 첫 번째 숫자 입력
-            while (true) {
-                System.out.print("첫 번째 숫자를 입력하세요 (0 이상): ");
-                num1 = sc.nextInt();
-                // 양의 정수일때만 반복문 탈출
-                if (num1 >= 0) {
-                    break;
-                }
-                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
-            }
+            num1 = getIsNumber(sc, "첫 번째");
 
             // 두 번째 숫자 입력
-            for (;;) {
-                System.out.print("두 번째 숫자를 입력하세요 (0 이상): ");
-                num2 = sc.nextInt();
-                if (num2 >= 0) {
-                    break;
-                }
-                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
-            }
+            num2 = getIsNumber(sc, "두 번째");
 
             System.out.print("사칙연산 기호를 입력하세요 : ");
             operator = sc.next().charAt(0);
@@ -132,5 +117,29 @@ public class App {
             }
         }
         sc.close(); // 입력 닫기
+    }
+
+    /**
+     * 양의 정수 입력 받는 메소드
+     * @param sc Scanner 객체
+     * @param order 순서 ("첫 번째", "두 번째")
+     * @return 입력 받은 양의 숫자
+     */
+    public static int getIsNumber(Scanner sc, String order) {
+        while (true) {
+            System.out.print(order + " 숫자를 입력하세요 (정수) : ");
+            // 입력한 값이 숫자 정수라면
+            if (sc.hasNextInt()) {
+                int num = sc.nextInt();
+                // 양의 정수만 반환
+                if(num >= 0) {
+                    return num;
+                }
+                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+            } else {
+                System.out.println("올바른 숫자만 입력해주세요.");
+                sc.next(); // 잘못된 입력 제거
+            }
+        }
     }
 }
