@@ -37,22 +37,35 @@ public class App {
             // 첫 번째 숫자 입력
             while (true) {
                 System.out.print("첫 번째 숫자를 입력하세요 (0 이상): ");
-                num1 = sc.nextInt();
-                // 양의 정수일때만 반복문 탈출
-                if (num1 >= 0) {
-                    break;
+                // 입력한 값이 숫자 정수라면
+                if (sc.hasNextInt()) {
+                    num1 = sc.nextInt();
+                    // 양의 정수만 반환
+                    if(num1 >= 0) {
+                        break;
+                    }
+                    System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+                } else {
+                    System.out.println("올바른 숫자만 입력해주세요.");
+                    sc.next(); // 잘못된 입력 제거
                 }
-                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
             }
 
             // 두 번째 숫자 입력
             for (;;) {
                 System.out.print("두 번째 숫자를 입력하세요 (0 이상): ");
-                num2 = sc.nextInt();
-                if (num2 >= 0) {
-                    break;
+                // 입력한 값이 숫자 정수라면
+                if (sc.hasNextInt()) {
+                    num2 = sc.nextInt();
+                    // 양의 정수만 반환
+                    if(num2 >= 0) {
+                        break;
+                    }
+                    System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
+                } else {
+                    System.out.println("올바른 숫자만 입력해주세요.");
+                    sc.next(); // 잘못된 입력 제거
                 }
-                System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
             }
 
             System.out.print("사칙연산 기호를 입력하세요 : ");
