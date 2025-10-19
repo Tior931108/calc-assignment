@@ -66,49 +66,8 @@ public class App {
             if(exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
-                boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
-
-                // 삭제 반복문(무한 루프)
-                while (true) {
-                    // getter로 리스트를 가져오기
-                    List<Integer> calculatorResults = calculator.getResults();
-
-                    // 삭제시에 최초 안내 사항
-                    if(!notice) {
-                        System.out.println("현재 저장된 연산결과 : " + calculatorResults);
-                        System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
-
-                        // 결과값 삭제 여무
-                        System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
-                        String removeValue = sc.next();
-                        if (removeValue.equalsIgnoreCase("no")) {
-                            break;
-                        }
-
-                        notice = true; // 이후에는 재반복 안되도록 설정
-                    }
-
-                    // 저장된 연산결과가 없을 경우
-                    if(calculatorResults.isEmpty()) {
-                        System.out.println("저장된 연산결과가 없습니다.");
-                        break;
-                    }
-
-
-                    // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
-                    calculator.removeResult();
-                    // setter를 활용하여 변경된 결과값 삽입
-                    calculator.setResults(calculatorResults);
-
-                    // 계속 삭제할지 물어보기
-                    System.out.println("삭제 후 저장된 연산결과 : " + calculatorResults);
-                    System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
-                    String continueRemove = sc.next();
-
-                    if (continueRemove.equalsIgnoreCase("no")) {
-                        break;
-                    }
-                }
+                // 결과값 삭제 여부 메소드
+                deleteLoopResults(sc, calculator);
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
                 System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
@@ -125,7 +84,7 @@ public class App {
      * @param order 순서 ("첫 번째", "두 번째")
      * @return 입력 받은 양의 숫자
      */
-    public static int getIsNumber(Scanner sc, String order) {
+    private static int getIsNumber(Scanner sc, String order) {
         while (true) {
             System.out.print(order + " 숫자를 입력하세요 (정수) : ");
             // 입력한 값이 숫자 정수라면
@@ -139,6 +98,57 @@ public class App {
             } else {
                 System.out.println("올바른 숫자만 입력해주세요.");
                 sc.next(); // 잘못된 입력 제거
+            }
+        }
+    }
+
+    /**
+     * 사칙연산 결과문 삭제 처리 여부 메소드
+     * @param sc Scanner 객체
+     * @param calculator ArithmeticCalculator 객체
+     */
+    private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator) {
+        boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
+
+        // 삭제 반복문(무한 루프)
+        while (true) {
+            // getter로 리스트를 가져오기
+            List<Integer> calculatorResults = calculator.getResults();
+
+            // 삭제시에 최초 안내 사항
+            if(!notice) {
+                System.out.println("현재 저장된 연산결과 : " + calculatorResults);
+                System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
+
+                // 결과값 삭제 여무
+                System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
+                String removeValue = sc.next();
+                if (removeValue.equalsIgnoreCase("no")) {
+                    break;
+                }
+
+                notice = true; // 이후에는 재반복 안되도록 설정
+            }
+
+            // 저장된 연산결과가 없을 경우
+            if(calculatorResults.isEmpty()) {
+                System.out.println("저장된 연산결과가 없습니다.");
+                break;
+            }
+
+
+            // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
+            calculator.removeResult();
+            // setter를 활용하여 변경된 결과값 삽입
+            calculator.setResults(calculatorResults);
+
+            // 계속 삭제할지 물어보기
+            System.out.println("삭제 후 저장된 연산결과 : " + calculatorResults);
+            System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
+            String continueRemove = sc.next();
+
+            if (continueRemove.equalsIgnoreCase("no")) {
+                break;
             }
         }
     }
