@@ -2,6 +2,7 @@ package lv3calculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 제네릭을 활용한 사칙연산 클래스
@@ -63,5 +64,20 @@ public class ArithmeticCalculator<T extends Number> {
             // 저장된 데이터가 없다면
             System.out.println("삭제할 결과값이 없습니다.");
         }
+    }
+
+    /**
+     * 특정 값보다 큰 결과값들을 조회하는 메소드
+     * 람다 & 스트림을 활용하여 필터링
+     *
+     * @param referValue 기준 값
+     * @return 기준 값보다 큰 결과값들의 리스트
+     */
+    public List<T> getResultMoreThan(double referValue) {
+
+        return results.stream() // 1. 데이터 준비 : 컬렉션을 스트림으로 변환
+                // 입력된 기준값 referValue 보다 큰 컬렉션만 조회
+                .filter(result -> result.doubleValue() > referValue) // 중간 연산 등록 : 데이터 변환 및 필터링
+                .toList(); // 최종 처리 및 데이터 변환 [ collect(Collectors.toUnmodifiableList()) -> toList() 변경 ]
     }
 }

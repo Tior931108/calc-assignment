@@ -70,6 +70,20 @@ public class App {
             if (exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
+                // 특정 값보다 큰 결과 조회 (람다&스트림)
+                System.out.print("득정 값보다 큰 결과를 조회하시겠습니까? (no 입력시 종료) : ");
+                String yesOrNo = sc.next();
+
+                if (yesOrNo.equalsIgnoreCase("no")) {
+                    // 바로 삭제 로직으로
+                } else {
+                    System.out.print("기준 값을 입력하세요 : ");
+                    double referValue = sc.nextDouble();
+                    List<Number> filterdListed = calculator.getResultMoreThan(referValue);
+                    System.out.println(" ( " + referValue + " ) 보다 큰 결과 : " + filterdListed);
+                    System.out.println("---------------------------");
+                }
+
                 // 결과값 삭제 여부 메소드
                 deleteLoopResults(sc, calculator);
 
