@@ -23,10 +23,12 @@ Java를 활용한 사칙연산 계산기 프로젝트 과제입니다.
 - **Getter/Setter**: 간접 접근을 통한 데이터 관리
 - **삭제 기능**: 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
 
-### Lv.3 - Enum과 제네릭 이해한 계산기 추가 개선
+### Lv.3 - Enum과 제네릭, 람다&스트림을 이해한 계산기 추가 개선
 - `OperatorType` Enum 클래스로 사칙연산 기능 분리
-- `ArithmeticCalculator` 클래스는 사칙연산의 결과값들을 저장하고 삭제하는 기능만을 담당
+- `ArithmeticCalculator` 클래스는 사칙연산의 결과값들을 저장하고 삭제하는 기능
 - 제네릭을 활용하여 정수와 실수 자유롭게 입력 가능
+- 람다&스트림을 활용한 특정한 값보다 큰 결과값 출력 기능
+- 큰 결과값 리스트 별도 분리 및 삭제 후 나머지 리스트와 합하여 최종 결과값 출력
 
 
 ## 🏗️ 프로젝트 구조
@@ -40,7 +42,7 @@ src/
    └── Calculator.java             # 계산기 로직 클래스
 ├──lv3calculator                   # lv.3 계산기 패키지
    └── App.java                    # 메인 실행 클래스
-   └── ArithmeticCalculator.java   # 사칙연산 결과값 리스트 저장하는 클래스
+   └── ArithmeticCalculator.java   # 사칙연산 결과값 리스트 관리하는 클래스
    └── OperatorType.java           # 사칙연산 기능 클래스
 ```
 
@@ -72,32 +74,51 @@ public void removeResult() { ... }
 - **잘못된 연산자**: `IllegalArgumentException` 처리
 
 ### [Lv.3]
-### 5. 각 Enum 상수는 추상 메소드 apply를 상속.
+### 5. 각 Enum 상수는 함수형 인터페이스로 람다식 구현
 ```java
-PLUS(operator) {
-    @Override
-    public int apply(int num1, int num2) {
-        return num1 + num2;
+MINUS('-', (num1, num2) -> {
+    // 둘 중 하나라도 실수(Double) 이면 Double연산
+    if (num1 instanceof Double || num2 instanceof Double) {
+    return Double.valueOf(num1.doubleValue() - num2.doubleValue());
     }
+    // 둘 다 정수(Integer)라면 Integer 연산
+    return Integer.valueOf(num1.intValue() - num2.intValue());
+})
+```
+```java
+OperatorType(char symbol, BiFunction<Number, Number, Number> operation) {
+    this.symbol = symbol;
+    this.operation = operation;
 }
-
 ...
-
-public abstract int apply(int num1, int num2);
+public <T extends Number> T apply(Number num1, Number num2) {
+    // Bifuction의 apply 메소드를 호출하려 람다식 실행
+    // (T)는 Number 하위 타입(Double 이거나 Integer)이므로 안전하게 캐스팅이 가능
+    return (T) operation.apply(num1, num2);
+}
 ```
 
 - 추후 추가될 연산자의 경우 `OperatorType` Enum 에서 기능 추가.
 - `ArithmeticCalculator`클래스는 사칙연산 결과값 컬렉션 기능으로 분리
-- [숫자][연산자][숫자]의 이항 연산의 공통 기능을 강제하는 추상 메소드 사용
+- [숫자][연산자][숫자]의 이항 연산의 공통 기능 람다식 구현
+- **BiFunction** <Number, Number, Number> : 2개의 Number를 받아서 Number를 반환하는 함수형 인터페이스
 
 ### 6. 제네릭을 활용하여 정수와 실수 자유롭게 입력
 ```java
 public class ArithmeticCalculator<T extends Number> { ... }
-
-public abstract <T extends Number> T apply(Number num1, Number num2);
 ```
 - `Integer`, `Double` Wrapper 클래스의 부모 클래스인 `Number`클래스를 상속 받아 제네릭`<T>` 구현
 
+### 7. 람다, 스트림을 활용하여 특정 값보다 큰 결과값들을 출력
+```java
+public List<T> getResultsMoreThan(double referValue) {
+    return results.stream() // 1. 데이터 준비 : 컬렉션을 스트림으로 변환
+            // 입력된 기준값 referValue 보다 큰 컬렉션만 조회
+            .filter(result -> result.doubleValue() > referValue) // 중간 연산 등록 : 데이터 변환 및 필터링
+            .collect(Collectors.toList()); // 최종 처리 및 데이터 변환
+}
+```
+- 람다 및 스트림을 활용하여 입력한 값 `referValue`보다 큰 결과값 출력
 
 ## 🚀 실행 방법
 
@@ -110,6 +131,7 @@ git clone [repository-url]
 
 ## 📝 사용 예시
 
+- **[Lv.1/2]**
 ```
 ====== 사칙연산 계산기 ======
 첫 번째 숫자를 입력하세요 (0 이상): -4
@@ -149,7 +171,59 @@ git clone [repository-url]
 계속 삭제하시겠습니까? (no 입력시 종료) : no
 최종 저장된 연산결과 : []
 ====== 사칙연산 계산기 종료 =====
-
+```
+- [Lv.3]
+```
+====== 사칙연산 계산기 ======
+첫번째 숫자를 입력하세요 (정수 or 실수) : ee
+올바른 숫자만 입력해주세요.
+첫번째 숫자를 입력하세요 (정수 or 실수) : 1.5
+두번째 숫자를 입력하세요 (정수 or 실수) : ee
+올바른 숫자만 입력해주세요.
+두번째 숫자를 입력하세요 (정수 or 실수) : 2
+사칙연산 기호를 입력하세요 : +
+결과(실수) : 3.5
+더 계산하시겠습니까? (exit 입력 시 종료) : y
+====== 사칙연산 계산기 ======
+첫번째 숫자를 입력하세요 (정수 or 실수) : 2
+두번째 숫자를 입력하세요 (정수 or 실수) : 1.5
+사칙연산 기호를 입력하세요 : -
+결과(실수) : 0.5
+더 계산하시겠습니까? (exit 입력 시 종료) : y
+====== 사칙연산 계산기 ======
+첫번째 숫자를 입력하세요 (정수 or 실수) : 3
+두번째 숫자를 입력하세요 (정수 or 실수) : 0
+사칙연산 기호를 입력하세요 : /
+나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.
+====== 사칙연산 계산기 ======
+첫번째 숫자를 입력하세요 (정수 or 실수) : 3
+두번째 숫자를 입력하세요 (정수 or 실수) : 2
+사칙연산 기호를 입력하세요 : ;
+잘못된 연산 기호 입니다. (+, -, *, / 중 입력하세요)
+====== 사칙연산 계산기 ======
+첫번째 숫자를 입력하세요 (정수 or 실수) : 3
+두번째 숫자를 입력하세요 (정수 or 실수) : 2
+사칙연산 기호를 입력하세요 : /
+결과(실수) : 1.5
+더 계산하시겠습니까? (exit 입력 시 종료) : exit
+====== 사칙연산 종료 =======
+입력한 특정 값보다 큰 결과에서 삭제할 수도 있습니다.
+조회하시겠습니까? (no 입력시 종료) : y
+기준 값을 입력하세요 : 1
+---------------------------
+ ( 1.0 ) 보다 큰 결과 : [3.5, 1.5]
+ ( 1.0 ) 같거나 작은 결과 : [0.5]
+---------------------------
+현재 저장된 연산결과 : [3.5, 1.5]
+가장 먼저 저장된 값만 삭제할 수 있습니다.
+---------------------------
+삭제하시겠습니까? (no 입력시 종료) : y
+가장 먼저 저장된 값이 삭제되었습니다.
+삭제 후 저장된 연산결과 : [1.5]
+---------------------------
+계속 삭제하시겠습니까? (no 입력시 종료) : no
+최종 저장된 연산결과 : [0.5, 1.5]
+====== 사칙연산 계산기 종료 =====
 ```
 
 ## 🛠️ 기술 스택
@@ -167,6 +241,7 @@ git clone [repository-url]
 - Scanner를 통한 사용자 입력 처리
 - Enum 타입 활용하여 연산자 정보 관리
 - Number 클래스 상속받아 제네릭 구현
+- 람다&스트림 활용하여 결과값 정리
 
 ## 🔄 버전 히스토리
 
@@ -175,6 +250,7 @@ git clone [repository-url]
 - **v2.1**: Getter/Setter를 활용한 데이터 삭제 기능 추가
 - **v3.0**: Enum 타입을 활용하여 연산자 타입 정보관리 분리
 - **v3.1**: 제네릭을 활용하여 정수와 실수 자유롭게 입력
+- **v3.2**: 람다&스트림 활용하여 특정한 값보다 큰 결과값 출력
 
 ## 👤 작성자
 
