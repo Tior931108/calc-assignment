@@ -6,13 +6,16 @@ public enum OperatorType {
      * 각각 사칙연산을
      * 추상 메소드를 상속 받아서 구현.
      * 각 Enum 상수가 익명 클래스처럼 동작한다.
-     * 제네릭을 활용하여 타입 안정성을 확보하면서도 유연한 계싼 가능
+     * 제네릭을 활용하여 타입 안정성을 확보하면서도 유연한 계산 가능
      */
     PLUS('+') {
         @Override
         public <T extends Number> T apply(Number num1, Number num2) {
             // 둘 중 하나라도 실수(Double) 이면 Double연산
             if (num1 instanceof Double || num2 instanceof Double) {
+                // 1. num1.doubleValue() + num2.doubleValue() : double형 기본형
+                // 2. Double.valueOf(...) : Double Wrapper 클래스로 감싸주기
+                // 3. (T)는 Number 하위 타입(Double)이므로 안전하게 캐스팅이 가능
                 return (T) Double.valueOf(num1.doubleValue() + num2.doubleValue());
             }
             // 둘 다 정수(Integer)라면 Integer 연산
