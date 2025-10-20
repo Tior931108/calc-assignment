@@ -74,7 +74,10 @@ public class App {
                 deleteLoopResults(sc, calculator);
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
-                System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
+                if(!calculator.getResults().isEmpty()){
+                    // 결과가 있을때만 출력
+                    System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
+                }
                 System.out.println("====== 사칙연산 계산기 종료 =====");
                 break;
             }
@@ -124,6 +127,7 @@ public class App {
                 // getter로 리스트를 가져오기
                 System.out.println("현재 저장된 연산결과 : " + calculator.getResults());
                 System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
+                System.out.println("---------------------------");
 
                 // 결과값 삭제 여무
                 System.out.print("삭제하시겠습니까? (no 입력시 종료) : ");
@@ -135,20 +139,21 @@ public class App {
                 notice = true; // 이후에는 재반복 안되도록 설정
             }
 
-            // 저장된 연산결과가 없을 경우
-            if (calculator.getResults().isEmpty()) {
-                System.out.println("저장된 연산결과가 없습니다.");
-                break;
-            }
-
 
             // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
             calculator.removeResult();
             // setter를 활용하여 변경된 결과값 삽입
             calculator.setResults(calculator.getResults());
 
+            // 더이상 삭제할 연산결과가 없을 경우
+            if (calculator.getResults().isEmpty()) {
+                System.out.println("더 이상 삭제할 결과값이 없습니다.");
+                break;
+            }
+
             // 계속 삭제할지 물어보기
             System.out.println("삭제 후 저장된 연산결과 : " + calculator.getResults());
+            System.out.println("---------------------------");
             System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
             String continueRemove = sc.next();
 
