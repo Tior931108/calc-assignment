@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 /**
  * Lv.3 Enum, 제네릭, 람다&스트림을 이해한 계산기 만들기
- *
+ * <p>
  * [요약]
  * a. 양의 정수만 받을 수 있었지만, 이제부터는 실수도 받을 수 있게 수정한다.
  * b. 결과가 저장되어 있는 컬렉션을 조회하는 기능을 만든다.
  * c. 그때 특정 값보다 큰 결과값을 출력할 수 있도록 한다.
- *
+ * <p>
  * 1) Enum 타입을 활용하여 연산자 타입에 대한 정보를 관리하고 이를 사칙연산 계산기 ArithmeticCalculator 클래스 활용
  * 2) 제네릭을 활용하여 실수, 즉 double 타입의 값을 전달 받아도 연산이 수행하도록 만들기
  * 3) 람다와 스트림을 활용하여 저장된 연산 결과들 중 Scanner로 입력받은 값보다 큰 결과값들을 출력
@@ -91,7 +91,7 @@ public class App {
                     System.out.println("---------------------------");
 
                     // 3. 필터링된 리스트에서만 삭제 진행
-                    deleteLoopResults(sc, calculator,  fillterdListed);
+                    deleteLoopResults(sc, calculator, fillterdListed);
 
                     // 4. 나머지 리스트 + 삭제 후 필터링된 리스트 => 최종결과
                     List<Number> finalResults = new ArrayList<>(remainedListed);
@@ -101,7 +101,7 @@ public class App {
 
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
-                if(!calculator.getResults().isEmpty()){
+                if (!calculator.getResults().isEmpty()) {
                     // 결과가 있을때만 출력
                     System.out.println("최종 저장된 연산결과 : " + calculator.getResults());
                 }
@@ -126,7 +126,7 @@ public class App {
             if (sc.hasNextInt()) {
                 int numInt = sc.nextInt();
                 return numInt; // Integer 반환
-            // 입력한 숫자값이 실수라면
+                // 입력한 숫자값이 실수라면
             } else if (sc.hasNextDouble()) {
                 double numDouble = sc.nextDouble();
                 return numDouble; // Double 반환
@@ -143,9 +143,9 @@ public class App {
      * @param sc         Scanner 객체
      * @param calculator ArithmeticCalculator 객체
      */
-    private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator,  List<Number> targetList) {
+    private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator, List<Number> targetList) {
         // 삭제 대상 리스트 결정
-        List<Number> workingList = (targetList != null) ?  targetList : calculator.getResults();
+        List<Number> workingList = (targetList != null) ? targetList : calculator.getResults();
 
         boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
 

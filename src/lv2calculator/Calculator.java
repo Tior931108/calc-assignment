@@ -9,8 +9,9 @@ public class Calculator {
 
     /**
      * 사칙 연산 수행 메서드
-     * @param num1 첫번째 양의 정수(0포함) 숫자
-     * @param num2 두번째 양의 정수(0포함) 숫자
+     *
+     * @param num1     첫번째 양의 정수(0포함) 숫자
+     * @param num2     두번째 양의 정수(0포함) 숫자
      * @param operator 연산자
      * @return 계산된 값
      */

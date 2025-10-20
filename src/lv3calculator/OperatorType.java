@@ -6,7 +6,7 @@ public enum OperatorType {
 
     /**
      * 람다식을 활용한 사칙 연산 구현
-     * 각 Enum 상수가 BiFunction 함수형 인터페이스를 통해 연산 로직을 간경하게 표현
+     * 각 Enum 상수가 BiFunction 함수형 인터페이스를 통해 연산 로직을 간결하게 표현
      *
      * @funtionalInterface가 이미 선언된 표준 함수형 인터페이스
      * BiFunction <Number, Number, Number> : 2개의 Number를 받아서 Number를 반환하는 함수형 인터페이스
@@ -42,7 +42,7 @@ public enum OperatorType {
             throw new ArithmeticException("나눗셈 연산에서 분모(두 번째 정수)에 0이 입력될 수 없습니다.");
         }
         // 나눗셈은 정확한 결과를 위해서 항상 Double로 반환
-            return Double.valueOf(num1.doubleValue() / num2.doubleValue());
+        return Double.valueOf(num1.doubleValue() / num2.doubleValue());
     });
 
     private final char symbol;
@@ -51,7 +51,7 @@ public enum OperatorType {
     /**
      * Operator 생성자
      *
-     * @param symbol 연산자 기호
+     * @param symbol    연산자 기호
      * @param operation 람다식으로 표현된 연산 함수 (BiFunction 함수형 인터페이스)
      */
     OperatorType(char symbol, BiFunction<Number, Number, Number> operation) {
@@ -84,13 +84,13 @@ public enum OperatorType {
     /**
      * 실제 연산을 수행하는 추상 메소드
      * 람다식으로 정의된 operation 함수형 인터페이스를 실행
-     *
+     * <p>
      * 제네릭 메소드로 구현하여 타입 안정성 확보
      * [ 정수 ] [ 연산자 ] [ 정수 ] > Integer
      * [ 실수 ] [ 연산자 ] [ 정수 ] > Double
      * [ 정수 ] [ 연산자 ] [ 실수 ] > Double
      * [ 실수 ] [ 연산자 ] [ 실수 ] > Double
-     *
+     * <p>
      * 나눗셈은 항상 Double 반환
      *
      * @param num1 첫 번째 숫자

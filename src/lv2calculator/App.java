@@ -4,19 +4,17 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
-
-Lv.2 클래스를 적용해 기본적인 연산을 수행할 수 있는 계산기 만들기
-
- [요약]
- a. 계산된 결과 값들을 기록하는 컬렉션을 만든다.
- b. 컬렉션의 가장 먼저 저장된 데이터를 삭제하는 기능을 만든다.
-
- 1) 사칙연산을 수행 후, 결과값 반환 메서드 구현 & 연산 결과를 저장하는 컬렉션 타입 필드를 가진 Calculator 생성
- 2) Lv.1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정
- 3) App 클래스의 main 메소드에서 Calculator클래스의 연산 결과를 저장하고 있는 컬렉션 필드에 직접 접근하지 못하도록 수정(캡슐화)
- 4) Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 기능을 가진 메서드를 구현한 후
-    App 클래스의 main 메서드에 삭제 메서드가 활용될 수 있도록 수정
-
+ * Lv.2 클래스를 적용해 기본적인 연산을 수행할 수 있는 계산기 만들기
+ * <p>
+ * [요약]
+ * a. 계산된 결과 값들을 기록하는 컬렉션을 만든다.
+ * b. 컬렉션의 가장 먼저 저장된 데이터를 삭제하는 기능을 만든다.
+ * <p>
+ * 1) 사칙연산을 수행 후, 결과값 반환 메서드 구현 & 연산 결과를 저장하는 컬렉션 타입 필드를 가진 Calculator 생성
+ * 2) Lv.1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정
+ * 3) App 클래스의 main 메소드에서 Calculator클래스의 연산 결과를 저장하고 있는 컬렉션 필드에 직접 접근하지 못하도록 수정(캡슐화)
+ * 4) Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 기능을 가진 메서드를 구현한 후
+ * App 클래스의 main 메서드에 삭제 메서드가 활용될 수 있도록 수정
  */
 public class App {
     public static void main(String[] args) {
@@ -24,7 +22,7 @@ public class App {
         Calculator calculator = new Calculator();
         Scanner sc = new Scanner(System.in);
 
-        while(true) { // 전체 계산 반복
+        while (true) { // 전체 계산 반복
             System.out.println("====== 사칙연산 계산기 ======");
 
             // 입력 받은 수 저장할 변수 선언
@@ -41,7 +39,7 @@ public class App {
                 if (sc.hasNextInt()) {
                     num1 = sc.nextInt();
                     // 양의 정수만 반환
-                    if(num1 >= 0) {
+                    if (num1 >= 0) {
                         break;
                     }
                     System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
@@ -52,13 +50,13 @@ public class App {
             }
 
             // 두 번째 숫자 입력
-            for (;;) {
+            for (; ; ) {
                 System.out.print("두 번째 숫자를 입력하세요 (0 이상): ");
                 // 입력한 값이 숫자 정수라면
                 if (sc.hasNextInt()) {
                     num2 = sc.nextInt();
                     // 양의 정수만 반환
-                    if(num2 >= 0) {
+                    if (num2 >= 0) {
                         break;
                     }
                     System.out.println(" 0 이상의 양의 정수를 입력해야 합니다.");
@@ -90,9 +88,8 @@ public class App {
             String exit = sc.next(); // 종료할 문자열 입력
 
 
-
             // Calculator 클래스에서 구현한 컬렉션 필드의 getter, setter와 컬렉션 삭제 메소드 활용
-            if(exit.equalsIgnoreCase("exit")) {
+            if (exit.equalsIgnoreCase("exit")) {
                 System.out.println("====== 사칙연산 종료 =======");
 
                 boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
@@ -104,7 +101,7 @@ public class App {
                     List<Integer> calculatorResults = calculator.getResults();
 
                     // 삭제시에 최초 안내 사항
-                    if(!notice) {
+                    if (!notice) {
                         System.out.println("현재 저장된 연산결과 : " + calculatorResults);
                         System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
 
@@ -119,7 +116,7 @@ public class App {
                     }
 
                     // 저장된 연산결과가 없을 경우
-                    if(calculatorResults.isEmpty()) {
+                    if (calculatorResults.isEmpty()) {
                         System.out.println("저장된 연산결과가 없습니다.");
                         break;
                     }
