@@ -1,7 +1,6 @@
 package lv3calculator;
 
-import lv2calculator.Calculator;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,10 +33,10 @@ public class App {
             Number result;
 
             // 첫 번째 숫자 입력
-            num1 = getIsNumber(sc, "첫 번째");
+            num1 = getIsNumber(sc, "첫번째");
 
             // 두 번째 숫자 입력
-            num2 = getIsNumber(sc, "두 번째");
+            num2 = getIsNumber(sc, "두번째");
 
             System.out.print("사칙연산 기호를 입력하세요 : ");
             operator = sc.next().charAt(0);
@@ -71,21 +70,35 @@ public class App {
                 System.out.println("====== 사칙연산 종료 =======");
 
                 // 특정 값보다 큰 결과 조회 (람다&스트림)
-                System.out.print("득정 값보다 큰 결과를 조회하시겠습니까? (no 입력시 종료) : ");
+                System.out.println("입력한 특정 값보다 큰 결과에서 삭제할 수도 있습니다.");
+                System.out.print("조회하시겠습니까? (no 입력시 종료) : ");
                 String yesOrNo = sc.next();
 
                 if (yesOrNo.equalsIgnoreCase("no")) {
                     // 바로 삭제 로직으로
+                    deleteLoopResults(sc, calculator, null);
                 } else {
                     System.out.print("기준 값을 입력하세요 : ");
                     double referValue = sc.nextDouble();
-                    List<Number> filterdListed = calculator.getResultMoreThan(referValue);
-                    System.out.println(" ( " + referValue + " ) 보다 큰 결과 : " + filterdListed);
+
+                    // 1. 특정 값보다 큰 결과값 리스트 - 필터링 리스트
+                    List<Number> fillterdListed = calculator.getResultsMoreThan(referValue);
+                    // 2. 특정 값 포함하여 작은 리스트 - 나머지 리스트
+                    List<Number> remainedListed = calculator.getResultsLessThan(referValue);
                     System.out.println("---------------------------");
+                    System.out.println(" ( " + referValue + " ) 보다 큰 결과 : " + fillterdListed);
+                    System.out.println(" ( " + referValue + " ) 같거나 작은 결과 : " + remainedListed);
+                    System.out.println("---------------------------");
+
+                    // 3. 필터링된 리스트에서만 삭제 진행
+                    deleteLoopResults(sc, calculator,  fillterdListed);
+
+                    // 4. 나머지 리스트 + 삭제 후 필터링된 리스트 => 최종결과
+                    List<Number> finalResults = new ArrayList<>(remainedListed);
+                    finalResults.addAll(fillterdListed);
+                    calculator.setResults(finalResults);
                 }
 
-                // 결과값 삭제 여부 메소드
-                deleteLoopResults(sc, calculator);
 
                 // 최종 저장된 결과 리스트 및 계산기 종료
                 if(!calculator.getResults().isEmpty()){
@@ -130,7 +143,10 @@ public class App {
      * @param sc         Scanner 객체
      * @param calculator ArithmeticCalculator 객체
      */
-    private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator) {
+    private static void deleteLoopResults(Scanner sc, ArithmeticCalculator calculator,  List<Number> targetList) {
+        // 삭제 대상 리스트 결정
+        List<Number> workingList = (targetList != null) ?  targetList : calculator.getResults();
+
         boolean notice = false; // 최초 결과값 리스트 및, 가장 먼저 삭제됨을 알리는 안내문 출력여부
 
         // 삭제 반복문(무한 루프)
@@ -139,7 +155,7 @@ public class App {
             // 삭제시에 최초 안내 사항
             if (!notice) {
                 // getter로 리스트를 가져오기
-                System.out.println("현재 저장된 연산결과 : " + calculator.getResults());
+                System.out.println("현재 저장된 연산결과 : " + workingList);
                 System.out.println("가장 먼저 저장된 값만 삭제할 수 있습니다.");
                 System.out.println("---------------------------");
 
@@ -155,18 +171,16 @@ public class App {
 
 
             // 결과리스트중 가장 먼저 저장된 값 삭제 - removeResult()
-            calculator.removeResult();
-            // setter를 활용하여 변경된 결과값 삽입
-            calculator.setResults(calculator.getResults());
+            calculator.removeResult(workingList);
 
             // 더이상 삭제할 연산결과가 없을 경우
-            if (calculator.getResults().isEmpty()) {
+            if (workingList.isEmpty()) {
                 System.out.println("더 이상 삭제할 결과값이 없습니다.");
                 break;
             }
 
             // 계속 삭제할지 물어보기
-            System.out.println("삭제 후 저장된 연산결과 : " + calculator.getResults());
+            System.out.println("삭제 후 저장된 연산결과 : " + workingList);
             System.out.println("---------------------------");
             System.out.print("계속 삭제하시겠습니까? (no 입력시 종료) : ");
             String continueRemove = sc.next();

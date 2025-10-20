@@ -55,10 +55,11 @@ public class ArithmeticCalculator<T extends Number> {
     }
 
     // 가장 먼저 저장된 데이터를 삭제하는 메소드
-    public void removeResult() {
-        if (!results.isEmpty()) {
+    // 필터링된 리스트만 삭제 진행
+    public void removeResult(List<T> fillterResults) {
+        if (!fillterResults.isEmpty()) {
             // 저장된 데이터가 있다면 첫번째 요소 삭제 : 인덱스 0
-            results.remove(0);
+            fillterResults.remove(0);
             System.out.println("가장 먼저 저장된 값이 삭제되었습니다.");
         } else {
             // 저장된 데이터가 없다면
@@ -73,11 +74,26 @@ public class ArithmeticCalculator<T extends Number> {
      * @param referValue 기준 값
      * @return 기준 값보다 큰 결과값들의 리스트
      */
-    public List<T> getResultMoreThan(double referValue) {
+    public List<T> getResultsMoreThan(double referValue) {
 
         return results.stream() // 1. 데이터 준비 : 컬렉션을 스트림으로 변환
                 // 입력된 기준값 referValue 보다 큰 컬렉션만 조회
                 .filter(result -> result.doubleValue() > referValue) // 중간 연산 등록 : 데이터 변환 및 필터링
-                .toList(); // 최종 처리 및 데이터 변환 [ collect(Collectors.toUnmodifiableList()) -> toList() 변경 ]
+                .collect(Collectors.toList()); // 최종 처리 및 데이터 변환
+    }
+
+    /**
+     * 특정 값 포함하여 작은 결과값들을 조회하는 메소드
+     * 람다 & 스트림을 활용하려 필터링
+     *
+     * @param referValue 기준 값
+     * @return 기준 값 포함하여 작은 결과값들의 리스트 : 나머지 리스트
+     */
+    public List<T> getResultsLessThan(double referValue) {
+
+        return results.stream()
+                // 입력된 기준값 referValue 포함하여 작은 컬렉션만 조회 : 나머지 리스트
+                .filter(result -> result.doubleValue() <= referValue)
+                .collect(Collectors.toList());
     }
 }
