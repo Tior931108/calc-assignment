@@ -113,7 +113,7 @@ public class App {
     }
 
     /**
-     * 양의 정수 입력 받는 메소드
+     * 정수 or 실수 입력 받는 메소드
      *
      * @param sc    Scanner 객체
      * @param order 순서 ("첫 번째", "두 번째")

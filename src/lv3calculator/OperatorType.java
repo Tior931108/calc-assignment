@@ -8,7 +8,7 @@ public enum OperatorType {
      * 람다식을 활용한 사칙 연산 구현
      * 각 Enum 상수가 BiFunction 함수형 인터페이스를 통해 연산 로직을 간결하게 표현
      *
-     * @funtionalInterface가 이미 선언된 표준 함수형 인터페이스
+     * @FuntionalInterface가 이미 선언된 표준 함수형 인터페이스
      * BiFunction <Number, Number, Number> : 2개의 Number를 받아서 Number를 반환하는 함수형 인터페이스
      */
     PLUS('+', (num1, num2) -> {
@@ -82,7 +82,6 @@ public enum OperatorType {
     }
 
     /**
-     * 실제 연산을 수행하는 추상 메소드
      * 람다식으로 정의된 operation 함수형 인터페이스를 실행
      * <p>
      * 제네릭 메소드로 구현하여 타입 안정성 확보
